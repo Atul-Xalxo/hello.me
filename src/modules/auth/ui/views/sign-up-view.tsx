@@ -171,10 +171,10 @@ export const SignUpView = () => {
                     name="confirmPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>PassWord</FormLabel>
+                        <FormLabel>Confirm PassWord</FormLabel>
                         <FormControl>
                           <Input
-                            type="Confirm Password"
+                            type="password"
                             placeholder="**********"
                             {...field}
                           />
