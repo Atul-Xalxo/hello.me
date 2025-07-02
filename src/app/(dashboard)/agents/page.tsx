@@ -4,11 +4,10 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
 import {ErrorBoundary} from "react-error-boundary";
 
-const Page=()=>{
+const Page=async()=>{
     const queryClient=getQueryClient();
     void queryClient.prefetchQuery(trpc.agents.getMany.queryOptions());
-    return
-    (
+    return(
         <HydrationBoundary state={dehydrate(queryClient)}>
             <Suspense fallback={<AgentsViewLoading />}>
                <ErrorBoundary fallback={<AgentViewError/>}  >
