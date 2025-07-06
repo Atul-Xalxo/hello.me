@@ -7,16 +7,16 @@ import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 interface GeneratedAvatarProps {
   seed: string;
   className?: string;
-  varient: "botttsNeutral" | "initials";
+  variant: "botttsNeutral" | "initials";
 }
 
 export const GeneratedAvatar = ({
   seed,
   className,
-  varient,
+  variant,
 }: GeneratedAvatarProps) => {
   let avatar;
-  if (varient === "botttsNeutral") {
+  if (variant === "botttsNeutral") {
     avatar = createAvatar(botttsNeutral, {
       seed,
     });
@@ -28,9 +28,28 @@ export const GeneratedAvatar = ({
     });
   }
   return (
-    <Avatar className={cn(className)}>
-        <AvatarImage src={avatar.toDataUri()} alt="Avatar" />
-        <AvatarFallback>{seed.charAt(0).toUpperCase()}</AvatarFallback>
+   
+
+
+
+    <Avatar
+      className={cn(
+        "w-12 h-12 rounded-full overflow-hidden shrink-0", // small, circular, prevents resizing
+        className
+      )}
+    >
+      <AvatarImage
+        src={avatar.toDataUri()}
+        alt="Avatar"
+        className="w-16 h-16 object-cover rounded-full"
+      />
+      <AvatarFallback className="flex items-center justify-center w-full h-full bg-muted text-sm font-medium rounded-full">
+        {seed.charAt(0).toUpperCase()}
+      </AvatarFallback>
     </Avatar>
-  )
+  );
+  
+
+   
+   
 };
