@@ -36,48 +36,26 @@ export const AgentForm=({
     const router=useRouter();
     const queryClient=useQueryClient();
 
-    // const createAgent=useMutation({
-    //     trpc.agents.create.mutationOptions({
-    //         onSuccess:async()=>{
-    //             await queryClient.invalidateQueries(
-    //                 trpc.agents.getMany.queryOptions(),
-    //             );
-    //             if(initialValues?.id){
-    //                 await queryClient.invalidateQueries(
-    //                     trpc.agents.getOne.queryOptions({id:initialValues.id}),
-    //                 );
-    //             }
-    //             onSuccess?.();
-    //         },
-    //         onError:(error)=>{
-    //             toast.error(error.message);
+    const createAgent=useMutation(
+        trpc.agents.create.mutationOptions({
+            onSuccess:async()=>{
+                await queryClient.invalidateQueries(
+                    trpc.agents.getMany.queryOptions(),
+                );
+                if(initialValues?.id){
+                    await queryClient.invalidateQueries(
+                        trpc.agents.getOne.queryOptions({id:initialValues.id}),
+                    );
+                }
+                onSuccess?.();
+            },
+            onError:(error)=>{
+                toast.error(error.message);
 
-    //             //TODO:Check if error code is "FORBIDDEN",redirect to "/upgrade"
-    //         },
-    //     }),
-    // });
-console.log("trpc.agents.create:", trpc.agents.create);
-console.log("typeof trpc.agents.create:", typeof trpc.agents.create);
-
-
-    const createAgent = useMutation({
-  mutationFn: async (input) => {
-    return await trpc.agents.create(input); // or .mutate(input) if required
-  },
-  onSuccess: async () => {
-    await queryClient.invalidateQueries(["agents.getMany"]);
-
-    if (initialValues?.id) {
-      await queryClient.invalidateQueries(["agents.getOne", { id: initialValues.id }]);
-    }
-
-    onSuccess?.();
-  },
-  onError: (error) => {
-    toast.error(error.message);
-    // TODO: Check if error.code === "FORBIDDEN", redirect to /upgrade
-  },
-});
+                //TODO:Check if error code is "FORBIDDEN",redirect to "/upgrade"
+            },
+        }),
+    );
 
 
 
